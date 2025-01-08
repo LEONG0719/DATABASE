@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS Telephone(
 
 --ENTITY 4(waiting verify)
 
-CREATE TABLE IF NOT EXISTS Supervisor(
+CREATE TABLE IF NOT EXISTS Supervision(
 
     SuperviseeID VARCHAR(5) NOT NULL,
     SupervisorID VARCHAR(5) NOT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS InfoMenu(
 
     MenuName  VARCHAR(30) NOT NULL UNIQUE,
     MenuPrice DECIMAL(8,2)  NOT NULL,
-    Category  VARCHAR(10) NOT NULL,
+    Category  VARCHAR(20) NOT NULL,
 
     CONSTRAINT MenuName_PK PRIMARY KEY (MenuName),
     CONSTRAINT MenuName_FK FOREIGN KEY (MenuName) REFERENCES Menu (MenuName)
@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS Payment(
 CREATE TABLE IF NOT EXISTS Chef(
 
     Staff_ID              VARCHAR(5) NOT NULL,
-    Assigned_MenuCategory VARCHAR(10)   NOT NULL,
+    Assigned_MenuCategory VARCHAR(30)   NOT NULL,
 
     CONSTRAINT Staff_ID_PK  PRIMARY KEY (Staff_ID),
     CONSTRAINT Staff_ID_FK7 FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID)
@@ -179,14 +179,14 @@ CREATE TABLE IF NOT EXISTS Orders(
 
     OrderNo     INT(10)    NOT NULL,
     Quantity    INT(2)     NOT NULL,
-    OrderStatus VARCHAR(9) NOT NULL,
+    OrderStatus VARCHAR(20) NOT NULL,
     Staff_ID    VARCHAR(5) NOT NULL,
     MenuID      VARCHAR(5) NOT NULL,
 
     CONSTRAINT OrderNo_PK   PRIMARY KEY (OrderNo),
     CONSTRAINT Staff_ID_FK8 FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID),
     CONSTRAINT MenuID_FK    FOREIGN KEY (MenuID)   REFERENCES Menu  (MenuID)
-    
+
 );
 
 --ENTITY 15(CANNOT NULL IN ORDERDETAILS)
@@ -248,8 +248,115 @@ CREATE TABLE IF NOT EXISTS CustPayment(
     CONSTRAINT PaymentNo_FK1  FOREIGN KEY (PaymentNo)  REFERENCES Payment  (PaymentNo)
 );
 
+--INSERTING DATA
+
+INSERT INTO StaffPosition (Position, Salary)
+VALUES 
+    ('Manager', 5000.00),
+    ('Chef', 3000.00),
+    ('Cashier', 2000.00);
+
+INSERT INTO StaffPostcode (Postcode, State)
+VALUES 
+    (12345, 'Selangor'),
+    (54321, 'Johor'),
+    (67890, 'Penang');
+
+INSERT INTO Staff (Staff_ID, Name, Position, DoorplatNo, StreetNo, GardenName, Postcode, City, Country)
+VALUES 
+    ('S001', 'John Doe', 'Manager', 12, 'Jalan ABC', 'Rose Garden', 12345, 'Shah Alam', 'Malaysia'),
+    ('S002', 'Jane Smith', 'Chef', 34, 'Jalan DEF', 'Orchid Garden', 54321, 'Johor', 'Malaysia'),
+    ('S003', 'Alice Lee', 'Cashier', 56, 'Jalan GHI', 'Tulip Garden', 67890, 'GeorgeTown', 'Malaysia');
+
+INSERT INTO Telephone (Staff_ID, TelNo)
+VALUES 
+    ('S001', '0123456789'),
+    ('S002', '0119876543'),
+    ('S003', '0165432109');
+
+INSERT INTO Supervision (SuperviseeID, SupervisorID)
+VALUES 
+    ('S001', 'S002'),
+    ('S002', 'S003');
+
+INSERT INTO Stock (StockCheckDate, StockValuesIn, StockValuesLeft, Staff_ID)
+VALUES 
+    ('2025-01-01', 5000.00, 3500.00, 'S002'),
+    ('2025-01-02', 3000.00, 2500.00, 'S002');
+
+INSERT INTO Report (ReportDate, TotalSales, TotalCost, TotalProfit, Staff_ID)
+VALUES 
+    ('2025-01-01', 10000.00, 7000.00, 3000.00, 'S001'),
+    ('2025-01-02', 8000.00, 6000.00, 2000.00, 'S003');
+
+INSERT INTO Menu (MenuID, MenuName, Staff_ID)
+VALUES 
+    ('M001', 'Pasta', 'S002'),
+    ('M002', 'Burger', 'S003'),
+    ('M003', 'Pizza', 'S002');
+
+INSERT INTO InfoMenu (MenuName, MenuPrice, Category)
+VALUES 
+    ('Pasta', 25.00, 'Main Course'),
+    ('Burger', 15.00, 'Snack'),
+    ('Pizza', 20.00, 'Main Course');
+
+INSERT INTO Cashier (Staff_ID, POS_LoginPin)
+VALUES 
+    ('S003', 123456);
+
+INSERT INTO Counters (CounterDate, EnterCounterCash, LeaveCounterCash, Staff_ID)
+VALUES 
+    ('2025-01-01', 500.00, 2000.00, 'S003'),
+    ('2025-01-02', 700.00, 2200.00, 'S003');
+
+INSERT INTO Payment (PaymentNo, PaymentMethod, PaymentStatus, ReportDate, CounterDate)
+VALUES 
+    (1001, 'Credit Card', 'Completed', '2025-01-01', '2025-01-01'),
+    (1002, 'Cash', 'Pending', '2025-01-02', '2025-01-02');
+
+INSERT INTO Chef (Staff_ID, Assigned_MenuCategory)
+VALUES 
+    ('S002', 'Main Course');
+
+INSERT INTO Handling (KitchenOperationDate, Timestart, TimeDone)
+VALUES 
+    ('2025-01-01', '08:00:00', '15:00:00'),
+    ('2025-01-02', '09:00:00', '16:00:00');
+
+
+INSERT INTO Orders (OrderNo, Quantity, OrderStatus, Staff_ID, MenuID)
+VALUES 
+    (2001, 2, 'Completed', 'S003', 'M001'),
+    (2002, 1, 'In Progress', 'S002', 'M002');
+
+INSERT INTO OrderDetails (OrderDetail, OrderNo)
+VALUES 
+    ('D001', 2001),
+    ('D002', 2002);
+
+INSERT INTO CustomerName (PhoneNumber, Name)
+VALUES 
+    ('0123456789', 'Michael Tan'),
+    ('0119876543', 'Emily Wong');
+
+INSERT INTO Customer (CustomerNo, PhoneNumber)
+VALUES 
+    (3001, '0123456789'),
+    (3002, '0119876543');
+
+INSERT INTO Making (CustomerNo, PaymentNo, OrderNo)
+VALUES 
+    (3001, 1001, 2001),
+    (3002, 1002, 2002);
+
+INSERT INTO CustPayment (PaymentNo, DatePayment, TimePayment, PayPrice)
+VALUES 
+    (1001, '2025-01-01', '10:00:00', 50.00),
+    (1002, '2025-01-02', '11:30:00', 20.00);
 
 DROP DATABASE systems;
+
 
 
 
