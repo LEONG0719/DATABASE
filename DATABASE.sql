@@ -52,14 +52,14 @@ CREATE TABLE IF NOT EXISTS Telephone(
 
 --ENTITY 4(waiting verify)
 
-CREATE TABLE IF NOT EXISTS Supervision(
+CREATE TABLE IF NOT EXISTS Supervisor(
 
-    Supervisor_ID VARCHAR(5) NOT NULL,
-    Staff_ID      VARCHAR(5) NOT NULL,
+    SuperviseeID VARCHAR(5) NOT NULL,
+    SupervisorID VARCHAR(5) NOT NULL,
 
-    CONSTRAINT Supervisor_Staff_ID PRIMARY KEY (Supervisor_ID,Staff_ID),
-    CONSTRAINT Staff_ID_FK1        FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID),
-    CONSTRAINT Supervisor_ID       FOREIGN KEY (Supervisor_ID) REFERENCES Staff (Staff_ID)
+    CONSTRAINT Supervisee_Staff_ID PRIMARY KEY (SuperviseeID),
+    CONSTRAINT Supervisee_FK       FOREIGN KEY (SuperviseeID) REFERENCES Staff (Staff_ID),
+    CONSTRAINT Supervisor_FK       FOREIGN KEY (SupervisorID) REFERENCES Staff (Staff_ID)
 );
 
 --ENTITY 5
