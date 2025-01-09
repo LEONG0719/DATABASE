@@ -1,6 +1,6 @@
 -- Active: 1735461067548@@127.0.0.1@3306@systems@classicmodels
 
-CREATE DATABASE IF NOT EXISTS systems;
+CREATE DATABASE IF NOT EXISTS systems; 
 USE systems;
 
 --ENTITY 1
