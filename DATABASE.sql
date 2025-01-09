@@ -1,4 +1,4 @@
--- Active: 1735461067548@@127.0.0.1@3306@systems@classicmodels
+-- Active: 1735461427342@@127.0.0.1@3306@systems
 
 CREATE DATABASE IF NOT EXISTS systems; 
 USE systems;
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS Menu(
     CONSTRAINT Staff_ID_FK4 FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID)
 );
 
---ENTITY 8
+--ENTITY 8 
 
 CREATE TABLE IF NOT EXISTS InfoMenu(
 
