@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS Handling(
 
 CREATE TABLE IF NOT EXISTS OrderDetails(
 
-    OrderDetail VARCHAR(15) UNIQUE,
+    OrderDetail VARCHAR(15),
     OrderNo     INT(10) NOT NULL,
 
     CONSTRAINT ODDT_ODetail_OrderNo_PK PRIMARY KEY (OrderDetail, OrderNo),
@@ -340,7 +340,7 @@ VALUES
 INSERT INTO Orders (OrderNo, Quantity, OrderStatus, Staff_ID, MenuID)
 VALUES 
     (2001, 2, 'Completed', 'CF001', 'MR001'),
-    (2002, 1, 'In Progress', 'CF002', 'MN002'),
+    (2002, 1, 'In Progress', 'CF002', 'MN001'),
     (2003, 1, 'Completed', 'CF003', 'MW001'),
     (2004, 2, 'Completed', 'CF003', 'MW003'),
     (2005, 1, 'In Progress', 'CF003', 'MW003'),
@@ -348,12 +348,12 @@ VALUES
 --FAILED
 INSERT INTO Handling (KitchenOperationDate, Timestart, TimeDone, Staff_ID, OrderNo)
 VALUES 
-    ('2025-01-01', '08:04:09', '08:13:56', 2001),
-    ('2025-01-01', '09:01:45', '09:10:57', 2002),
-    ('2025-01-01', '10:56:34', '11:59:10', 2003),
-    ('2025-01-01', '10:59:10', '11:15:10', 2004),
-    ('2025-01-01', '13:34:22', '13:50:11', 2005),
-    ('2025-01-01', '14:54:11', '15:10:23', 2006);
+    ('2025-01-01', '08:04:09', '08:13:56', 'CF001', 2001),
+    ('2025-01-01', '09:01:45', '09:10:57', 'CF002', 2002),
+    ('2025-01-01', '10:56:34', '11:59:10', 'CF003', 2003),
+    ('2025-01-01', '10:59:10', '11:15:10', 'CF003', 2004),
+    ('2025-01-01', '13:34:22', '13:50:11', 'CF003', 2005),
+    ('2025-01-01', '14:54:11', '15:10:23', 'CF003', 2006);
 --FAILED
 INSERT INTO OrderDetails (OrderDetail, OrderNo)
 VALUES 
@@ -395,10 +395,10 @@ INSERT INTO CustPayment (PaymentNo, DatePayment, TimePayment, PayPrice)
 VALUES 
     (1001, '2025-01-01', '08:03:09', 12.00),
     (1002, '2025-01-01', '09:01:12', 6.00),
-    (1002, '2025-01-01', '10:55:56', 6.00),
-    (1002, '2025-01-01', '10:58:10', 10.00),
-    (1002, '2025-01-01', '13:33:22', 10.00),
-    (1002, '2025-01-01', '14:52:11', 10.00);
+    (1003, '2025-01-01', '10:55:56', 6.00),
+    (1004, '2025-01-01', '10:58:10', 10.00),
+    (1005, '2025-01-01', '13:33:22', 10.00),
+    (1006, '2025-01-01', '14:52:11', 10.00);
 
 --UPDATING DATA
 
