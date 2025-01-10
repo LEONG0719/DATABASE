@@ -1,4 +1,4 @@
--- Active: 1735461427342@@127.0.0.1@3306@systems
+-- Active: 1735461067548@@127.0.0.1@3306@systems
 
 CREATE DATABASE IF NOT EXISTS systems; 
 USE systems;
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS Payment(
 
     PaymentNo     INT(10)     NOT NULL,
     PaymentMethod VARCHAR(15) NOT NULL,
-    PaymentStatus VARCHAR(10) NOT NULL,
+    PaymentStatus VARCHAR(20) NOT NULL,
     ReportDate    DATE        NOT NULL,
     CounterDate   DATE        NOT NULL,
 
@@ -285,23 +285,23 @@ VALUES
 
 INSERT INTO Supervision (SuperviseeID, SupervisorID)
 VALUES 
-    ('OW001', 'CR001'),
-    ('OW001', 'CF001'),
-    ('OW001', 'CF002'),
-    ('OW001', 'CF003');
+    ('CR001', 'OW001'),
+    ('CF001', 'OW001'),
+    ('CF002', 'OW001'),
+    ('CF003', 'OW001');
 
 INSERT INTO Stock (StockCheckDate, StockValuesIn, StockValuesLeft, Staff_ID)
 VALUES 
-    ('2025-01-01', 100.00, 1000.00, 'CR001'),
+    ('2025-01-01', 100.00, 1000.00, 'CR001');
 
 INSERT INTO Report (ReportDate, TotalSales, TotalCost, TotalProfit, Staff_ID)
 VALUES 
-    ('2025-01-01', 54.00, 27.00, 27.00, 'OW001'),
+    ('2025-01-01', 54.00, 27.00, 27.00, 'OW001');
 
 INSERT INTO Menu (MenuID, MenuName, Staff_ID)
 VALUES 
-    ('MR001', 'Nasi Goreng Kampung', 'OW001')
-    ('MN001', 'Mee Goreng', 'OW001')
+    ('MR001', 'Nasi Goreng Kampung', 'OW001'),
+    ('MN001', 'Mee Goreng', 'OW001'),
     ('MW001', 'Pasta', 'OW001'),
     ('MW002', 'Burger', 'OW001'),
     ('MW003', 'Pizza', 'OW001');
@@ -320,7 +320,7 @@ VALUES
 
 INSERT INTO Counters (CounterDate, EnterCounterCash, LeaveCounterCash, Staff_ID)
 VALUES 
-    ('2025-01-01', 500.00, 506.00, 'CR001'),
+    ('2025-01-01', 500.00, 506.00, 'CR001');
 
 INSERT INTO Payment (PaymentNo, PaymentMethod, PaymentStatus, ReportDate, CounterDate)
 VALUES 
@@ -328,15 +328,15 @@ VALUES
     (1002, 'Credit Card', 'Completed', '2025-01-01', '2025-01-01'),
     (1003, 'Touch n Go', 'Incompleted', '2025-01-01', '2025-01-01'),
     (1004, 'Credit Card', 'Completed', '2025-01-01', '2025-01-01'),
-    (1005, 'Cash', 'Completed', '2025-01-01', '2025-01-01')
-    (1005, 'Debit Card', 'Completed', '2025-01-01', '2025-01-01');
+    (1005, 'Cash', 'Completed', '2025-01-01', '2025-01-01'),
+    (1006, 'Debit Card', 'Completed', '2025-01-01', '2025-01-01');
 
 INSERT INTO Chef (Staff_ID, Assigned_MenuCategory)
 VALUES 
     ('CF001', 'Rice'),
-    ('CF002', 'Noodles')
+    ('CF002', 'Noodles'),
     ('CF003', 'Western');
-
+--FAILED
 INSERT INTO Orders (OrderNo, Quantity, OrderStatus, Staff_ID, MenuID)
 VALUES 
     (2001, 2, 'Completed', 'CF001', 'MR001'),
@@ -345,7 +345,7 @@ VALUES
     (2004, 2, 'Completed', 'CF003', 'MW003'),
     (2005, 1, 'In Progress', 'CF003', 'MW003'),
     (2006, 1, 'Completed', 'CF003', 'MW003');
-
+--FAILED
 INSERT INTO Handling (KitchenOperationDate, Timestart, TimeDone, Staff_ID, OrderNo)
 VALUES 
     ('2025-01-01', '08:04:09', '08:13:56', 2001),
@@ -354,7 +354,7 @@ VALUES
     ('2025-01-01', '10:59:10', '11:15:10', 2004),
     ('2025-01-01', '13:34:22', '13:50:11', 2005),
     ('2025-01-01', '14:54:11', '15:10:23', 2006);
-
+--FAILED
 INSERT INTO OrderDetails (OrderDetail, OrderNo)
 VALUES 
     ('Add Spicy', 2001),
@@ -381,7 +381,7 @@ VALUES
     (3004, '0187998543'),
     (3005, '0183749495'),
     (3006, '0102846789');
-
+--FAILED
 INSERT INTO Making (CustomerNo, PaymentNo, OrderNo)
 VALUES 
     (3001, 1001, 2001),
@@ -390,7 +390,7 @@ VALUES
     (3004, 1004, 2004),
     (3005, 1005, 2005),
     (3006, 1006, 2006);
-
+--FAILED
 INSERT INTO CustPayment (PaymentNo, DatePayment, TimePayment, PayPrice)
 VALUES 
     (1001, '2025-01-01', '08:03:09', 12.00),
