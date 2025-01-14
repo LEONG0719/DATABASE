@@ -414,7 +414,80 @@ UPDATE Orders
 SET OrderStatus = 'Completed'
 WHERE OrderNo = 2005;
 
+--1)Retrieve Details of Staff and their Supervision
+
+SELECT 
+
+    s.Staff_ID,
+    s.Name,
+    s.Position,
+    sp.SupervisorID
+
+FROM Staff s
+LEFT JOIN supervision sp
+ON (s.Staff_ID = sp.SuperviseeID)
+WHERE supervisorID IS NOT NULL
+ORDER BY Staff_ID;
+
+--2)Retrieve Details of Menu
+SELECT 
+
+    m.MenuID, 
+    m.MenuName, 
+    im.MenuPrice
+
+FROM Menu m
+LEFT JOIN InfoMenu im ON m.MenuName = im.MenuName
+ORDER BY MenuID;
+
+--3)Retrieve Details of All Completed Orders and Corresponding Payment
+SELECT 
+    o.OrderNo, 
+    o.Quantity, 
+    o.OrderStatus, 
+    cp.PayPrice, 
+    cp.DatePayment, 
+    cp.TimePayment
+FROM Orders o
+JOIN Making mk ON o.OrderNo = mk.OrderNo
+JOIN CustPayment cp ON mk.PaymentNo = cp.PaymentNo
+WHERE o.OrderStatus = 'Completed'
+ORDER BY OrderNo;
+
+--4)Show Total Sales and Profit by Report Date
+SELECT 
+    ReportDate, 
+    SUM(TotalSales)  TotalSales, 
+    SUM(TotalProfit)  TotalProfit
+FROM Report
+GROUP BY ReportDate;
+
+--5)Total Revenue by Payment Method
+SELECT 
+    p.PaymentMethod, 
+    SUM(cp.PayPrice) TotalRevenue
+FROM Payment p
+JOIN CustPayment cp ON p.PaymentNo = cp.PaymentNo
+GROUP BY p.PaymentMethod;
+
+--6)Staff details
+SELECT * FROM STAFF
+NATURAL JOIN  StaffPosition;
+
+
+
+
+
+SHOW TABLES;
+
+
+
+
+
+
+
 DROP DATABASE systems;
+
 
 
 
