@@ -3,7 +3,7 @@
 CREATE DATABASE IF NOT EXISTS systems; 
 USE systems;
 
---ENTITY 1
+--ENTITY 1 StaffPosition
 CREATE TABLE IF NOT EXISTS StaffPosition(
 
     Position VARCHAR(10)  NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS StaffPosition(
 
     CONSTRAINT STFPosition_Position_PK PRIMARY KEY (Position)
 );
---ENTITY NEW
+--ENTITY 2 StaffPostcode
 
 CREATE TABLE IF NOT EXISTS StaffPostcode(
 
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS StaffPostcode(
     CONSTRAINT STFPostcode_Postcode_PK PRIMARY KEY (Postcode)
 );
 
---ENTITY 2
+--ENTITY 3 Staff
 
 CREATE TABLE IF NOT EXISTS Staff(
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Staff(
     CONSTRAINT STF_Postcode_FK FOREIGN KEY (Postcode) REFERENCES StaffPostcode (Postcode)
 );
 
---ENTITY 3 (Waiting Verify)
+--ENTITY 4 Telephone
 CREATE TABLE IF NOT EXISTS Telephone(
 
     Staff_ID VARCHAR(5)  NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS Telephone(
     CONSTRAINT TP_Staff_ID_FK       FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID)
 );
 
---ENTITY 4 (Waiting Verify)
+--ENTITY 5 Supervision
 
 CREATE TABLE IF NOT EXISTS Supervision(
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS Supervision(
     CONSTRAINT SPV_Supervisor_FK       FOREIGN KEY (SupervisorID) REFERENCES Staff (Staff_ID)
 );
 
---ENTITY 5
+--ENTITY 6 Stock
 
 CREATE TABLE IF NOT EXISTS Stock(
 
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS Stock(
     CONSTRAINT STK_Staff_ID_FK FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID)
 );
 
---ENTITY 6
+--ENTITY 7 Report
 
 CREATE TABLE IF NOT EXISTS Report(
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS Report(
     CONSTRAINT RP_Staff_ID_FK   FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID) 
 );
 
---ENTITY 7
+--ENTITY 8 Menu
 
 CREATE TABLE IF NOT EXISTS Menu(
 
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS Menu(
     CONSTRAINT MN_Staff_ID_FK FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID)
 );
 
---ENTITY 8 
+--ENTITY 9 InfoMenu
 
 CREATE TABLE IF NOT EXISTS InfoMenu(
 
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS InfoMenu(
     CONSTRAINT IFMN_MenuName_FK FOREIGN KEY (MenuName) REFERENCES Menu (MenuName)
 );
 
---ENTITY 9
+--ENTITY 10 Cashier
 
 CREATE TABLE IF NOT EXISTS Cashier(
 
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS Cashier(
     CONSTRAINT CSH_Staff_ID_FK FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID)
 );
 
---ENTITY 10 (Entity Name Changed)
+--ENTITY 11 Counters
 
 CREATE TABLE IF NOT EXISTS Counters(
 
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS Counters(
     CONSTRAINT CTR_Staff_ID_FK    FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID)
 );
 
---ENTITY 11
+--ENTITY 12 Payment
 
 CREATE TABLE IF NOT EXISTS Payment(
 
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS Payment(
     CONSTRAINT PM_CounterDate_FK FOREIGN KEY (CounterDate) REFERENCES Counters (CounterDate)
 );
 
---ENTITY 12
+--ENTITY 13 Chef
 
 CREATE TABLE IF NOT EXISTS Chef(
 
@@ -160,16 +160,15 @@ CREATE TABLE IF NOT EXISTS Chef(
     Assigned_MenuCategory VARCHAR(30) NOT NULL,
 
     CONSTRAINT CF_Staff_ID_PK PRIMARY KEY (Staff_ID),
-    CONSTRAINT CF_Staff_ID_FK FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID)
 );
 
---ENTITY 13 (Order)
+--ENTITY 14 Orders
 
 CREATE TABLE IF NOT EXISTS Orders(
 
     OrderNo     INT(10)     NOT NULL,
     Quantity    INT(2)      NOT NULL,
-    OrderStatus VARCHAR(20) NOT NULL,
+    OrderStatus VARCHAR(10) NOT NULL,
     Staff_ID    VARCHAR(5)  NOT NULL,
     MenuID      VARCHAR(5)  NOT NULL,
 
@@ -178,7 +177,7 @@ CREATE TABLE IF NOT EXISTS Orders(
     CONSTRAINT OD_MenuID_FK   FOREIGN KEY (MenuID)   REFERENCES Menu  (MenuID)
 );
 
---ENTITY 14
+--ENTITY 15 Handling
 
 CREATE TABLE IF NOT EXISTS Handling(
 
@@ -193,7 +192,7 @@ CREATE TABLE IF NOT EXISTS Handling(
     CONSTRAINT HD_OrderNO_FK  FOREIGN KEY (OrderNo)  REFERENCES Orders (OrderNo)
 );
 
---ENTITY 15 (CANNOT NULL IN ORDERDETAILS)
+--ENTITY 16 OrderDetails
 
 CREATE TABLE IF NOT EXISTS OrderDetails(
 
@@ -204,17 +203,18 @@ CREATE TABLE IF NOT EXISTS OrderDetails(
     CONSTRAINT ODDT_OrderNo_FK         FOREIGN KEY (OrderNo) REFERENCES Orders (OrderNo)
 );
 
---ENTITY 16
+--ENTITY 17 CustomerName
 
 CREATE TABLE IF NOT EXISTS CustomerName(
 
     PhoneNumber VARCHAR(12) NOT NULL,
     Name        VARCHAR(20) NOT NULL ,
+    Customer_Age INT(5)     NOT NULL,
 
     CONSTRAINT CN_Phonenumber_PK PRIMARY KEY (PhoneNumber)
 );
 
---ENTITY 17
+--ENTITY 18 Customer
 
 CREATE TABLE IF NOT EXISTS Customer(
 
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS Customer(
     CONSTRAINT CST_PhoneNumber_FK FOREIGN KEY (PhoneNumber) REFERENCES CustomerName (PhoneNumber)
 );
 
---ENTITY 18 (Wating Verify)
+--ENTITY 19 Making
 
 CREATE TABLE IF NOT EXISTS Making(
 
@@ -239,7 +239,7 @@ CREATE TABLE IF NOT EXISTS Making(
     CONSTRAINT MK_OrderNo_FK    FOREIGN KEY (OrderNo)    REFERENCES Orders   (OrderNo)
 );
 
---ENTITY 19
+--ENTITY 20 CustPayment
 
 CREATE TABLE IF NOT EXISTS CustPayment(
 
@@ -336,7 +336,7 @@ VALUES
     ('CF001', 'Rice'),
     ('CF002', 'Noodles'),
     ('CF003', 'Western');
---FAILED
+
 INSERT INTO Orders (OrderNo, Quantity, OrderStatus, Staff_ID, MenuID)
 VALUES 
     (2001, 2, 'Completed', 'CF001', 'MR001'),
@@ -345,7 +345,7 @@ VALUES
     (2004, 2, 'Completed', 'CF003', 'MW003'),
     (2005, 1, 'In Progress', 'CF003', 'MW003'),
     (2006, 1, 'Completed', 'CF003', 'MW003');
---FAILED
+
 INSERT INTO Handling (KitchenOperationDate, Timestart, TimeDone, Staff_ID, OrderNo)
 VALUES 
     ('2025-01-01', '08:04:09', '08:13:56', 'CF001', 2001),
@@ -354,7 +354,7 @@ VALUES
     ('2025-01-01', '10:59:10', '11:15:10', 'CF003', 2004),
     ('2025-01-01', '13:34:22', '13:50:11', 'CF003', 2005),
     ('2025-01-01', '14:54:11', '15:10:23', 'CF003', 2006);
---FAILED
+
 INSERT INTO OrderDetails (OrderDetail, OrderNo)
 VALUES 
     ('Add Spicy', 2001),
@@ -381,7 +381,7 @@ VALUES
     (3004, '0187998543'),
     (3005, '0183749495'),
     (3006, '0102846789');
---FAILED
+
 INSERT INTO Making (CustomerNo, PaymentNo, OrderNo)
 VALUES 
     (3001, 1001, 2001),
@@ -390,7 +390,7 @@ VALUES
     (3004, 1004, 2004),
     (3005, 1005, 2005),
     (3006, 1006, 2006);
---FAILED
+
 INSERT INTO CustPayment (PaymentNo, DatePayment, TimePayment, PayPrice)
 VALUES 
     (1001, '2025-01-01', '08:03:09', 12.00),
@@ -399,6 +399,15 @@ VALUES
     (1004, '2025-01-01', '10:58:10', 10.00),
     (1005, '2025-01-01', '13:33:22', 10.00),
     (1006, '2025-01-01', '14:52:11', 10.00);
+
+--ALTER TABLE
+ALTER TABLE orders
+MODIFY OrderStatus VARCHAR(20) NOT NULL;
+
+ALTER TABLE chef
+ADD CONSTRAINT CF_Staff_ID_FK FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID);
+ALTER TABLE CustomerName
+DROP COLUMN Customer_Age;
 
 --UPDATING DATA
 
