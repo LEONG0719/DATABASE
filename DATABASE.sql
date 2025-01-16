@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS Chef(
     Staff_ID              VARCHAR(5)  NOT NULL,
     Assigned_MenuCategory VARCHAR(30) NOT NULL,
 
-    CONSTRAINT CF_Staff_ID_PK PRIMARY KEY (Staff_ID),
+    CONSTRAINT CF_Staff_ID_PK PRIMARY KEY (Staff_ID)
 );
 
 --ENTITY 14 Orders
@@ -251,6 +251,17 @@ CREATE TABLE IF NOT EXISTS CustPayment(
     CONSTRAINT CP_PaymentNo_PK PRIMARY KEY (PaymentNo),
     CONSTRAINT CP_PaymentNo_FK FOREIGN KEY (PaymentNo) REFERENCES Payment (PaymentNo)
 );
+
+--ALTER TABLE
+
+ALTER TABLE orders
+MODIFY OrderStatus VARCHAR(20) NOT NULL;
+
+ALTER TABLE chef
+ADD CONSTRAINT CF_Staff_ID_FK FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID);
+
+ALTER TABLE CustomerName
+DROP COLUMN Customer_Age;
 
 --INSERTING DATA
 
@@ -400,15 +411,6 @@ VALUES
     (1005, '2025-01-01', '13:33:22', 10.00),
     (1006, '2025-01-01', '14:52:11', 10.00);
 
---ALTER TABLE
-ALTER TABLE orders
-MODIFY OrderStatus VARCHAR(20) NOT NULL;
-
-ALTER TABLE chef
-ADD CONSTRAINT CF_Staff_ID_FK FOREIGN KEY (Staff_ID) REFERENCES Staff (Staff_ID);
-ALTER TABLE CustomerName
-DROP COLUMN Customer_Age;
-
 --UPDATING DATA
 
 UPDATE Payment
@@ -484,22 +486,6 @@ SELECT * FROM STAFF
 NATURAL JOIN  StaffPosition;
 
 
-
-
-
 SHOW TABLES;
 
-
-
-
-
-
-
 DROP DATABASE systems;
-
-
-
-
-
-
-
